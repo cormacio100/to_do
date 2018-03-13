@@ -74,7 +74,7 @@ angular.module('RouteControllers', [])
     		}
     	};
     })
-    .controller('TodoController',function($scope,$location,TodoAPIFactory,store){
+    .controller('TodoController_old',function($scope,$location,TodoAPIFactory,store){
     	var URL = "https://morning-castle-91468.herokuapp.com/";
 
     	//	retrieve JWT and username from local storage
@@ -121,4 +121,33 @@ angular.module('RouteControllers', [])
     			});
     		}
     	};
-    });
+    })
+    .controller('TodoController', function($scope, $location, TodoAPIFactory, store) {
+        var URL = "https://morning-castle-91468.herokuapp.com/";
+ 
+        $scope.authToken = store.get('authToken');
+        $scope.username = store.get('username');
+ 
+ 		$scope.statuses = ['Todo','Doing','Done'];
+        $scope.todos = [];
+ 
+        TodoAPIFactory.getTodos(URL + "todo/", $scope.username, $scope.authToken).then(function(results) {
+            $scope.todos = results.data || [];
+            console.log($scope.todos);
+        }).catch(function(err) {
+            console.log(err);
+        });
+ 
+        $scope.submitForm = function() {
+            if ($scope.todoForm.$valid) {
+                $scope.todo.username = $scope.username;
+                $scope.todos.push($scope.todo);
+ 
+ 				TodoAPIFactory.createTodo(URL + "todo/", $scope.todo, $scope.authToken).then(function(results) {
+                    console.log(results)
+                }).catch(function(err) {
+                    console.log(err)
+                });
+            }
+        }
+    });;
