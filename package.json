@@ -1,0 +1,19 @@
+{
+  "name": "angular_todo",
+  "version": "1.0.0",
+  "description": "list of to_dos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cormacio100/to_do.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cormacio100/to_do/issues"
+  },
+  "homepage": "https://github.com/cormacio100/to_do#readme"
+}
