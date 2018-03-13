@@ -4,7 +4,7 @@ angular.module('RouteControllers', [])
 	.controller('HomeController', function($scope) {
 		$scope.title = "Welcome To Angular Todo!"
 	})
-	.controller('RegisterController', function($scope, UserAPIFactory,store) {
+	.controller('RegisterController', function($scope, $location,UserAPIFactory,store) {
 		
 		$scope.registrationUser = {};
 		var URL = "https://morning-castle-91468.herokuapp.com/";
@@ -28,6 +28,7 @@ angular.module('RouteControllers', [])
                 store.set('authToken', $scope.token);
 				console.log('token is:');
 				console.log($scope.token);
+				$location.path('/');
 			}).catch(function(err){
 				console.log(err.data);
 			});
@@ -56,7 +57,7 @@ angular.module('RouteControllers', [])
             } //end if
     	};
     })
-    .controller('LogoutController',function($scope,store){
+    .controller('LogoutController',function($scope,$location,store){
     	// 	remove the object from the store and fowrad the user
     	$scope.actions = ['No','Yes'];
 
@@ -67,6 +68,7 @@ angular.module('RouteControllers', [])
     			store.remove('username');
     			store.remove('authToken');
     			alert('user has been logged out');
+    			$location.path('/');
     		}else{
     			alert('User has not been logged out');
     		}
