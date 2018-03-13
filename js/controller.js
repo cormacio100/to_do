@@ -73,4 +73,52 @@ angular.module('RouteControllers', [])
     			alert('User has not been logged out');
     		}
     	};
+    })
+    .controller('TodoController',function($scope,$location,TodoAPIFactory,store){
+    	var URL = "https://morning-castle-91468.herokuapp.com/";
+
+    	//	retrieve JWT and username from local storage
+    	$scope.authToken = store.get('authToken');
+    	$scope.username = store.get('username');
+
+    	$scope.statuses = ['Todo','Doing','Done'];
+
+
+    	//	define empty todo object
+    	//$scope.todos = [];
+
+    	//	Retrieve the list of Todos
+    	TodoAPIFactory.getTodos(URL+"todo/"
+    		,$scope.username
+    		,$scope.authToken)
+    	.then(function(results){
+    		//	results will contain a list of todo items
+    		$scope.todos = results.data || [];
+    		console.log($scope.todos);
+    	}).catch(function(err){
+    		console.log(err);
+    	});
+
+
+
+    	$scope.submitForm = function(){
+    		//	check if the submitted form is valid
+    		if($scope.todoForm.$valid){
+    			//	assign logged in username to the Todo Item
+    			$scope.todo.username = $scope.username;
+    			//	add to the Todos object 
+    			$scope.todos.push($scope.todo);
+
+    			//	send Todo item to API to be saved
+    			//	3 params - url, data, token
+    			TodoAPIFactory.createTodo(URL+"todo/"
+    				,$scope.todo
+    				,$scope.authtoken)
+    			.then(function(results){
+    				console.log(results);
+    			}).catch(function(err){
+    				console.log(err);
+    			});
+    		}
+    	};
     });
