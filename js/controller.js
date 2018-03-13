@@ -4,20 +4,28 @@ angular.module('RouteControllers', [])
 	.controller('HomeController', function($scope) {
 		$scope.title = "Welcome To Angular Todo!"
 	})
-	.controller('RegisterController', function($scope,$location, UserAPIFactory) {
+	.controller('RegisterController', function($scope, UserAPIFactory,store) {
 		
 		$scope.registrationUser = {};
 		var URL = "https://morning-castle-91468.herokuapp.com/";
+		var authStorage = {
+			name: "StorageTest"
+		}
 
-
-		//	Sends a POST to an API with username and password
-		//	Receives a JWT in response
-		//	JWT can then be used to authenticate requests
+		//	Sends a POST to API with username and password
+		//	Receive a JWT in response
+		//	which can then be used to authenticate
 		$scope.login = function(){
 			UserAPIFactory.callAPI(URL+"accounts/api-token-auth/",$scope.data)
 			.then(function(results){
 				//	save the JWT (JSON Web Token) to scope as an object
 				$scope.token = results.data.token;
+				//	set JWT in local storage as a Key: Value pair so 
+				//	that it can be used by separte controllers
+				//	Also, store the username
+				//	Both stored as Strings
+				store.set('username', $scope.registrationUser.username);
+                store.set('authToken', $scope.token);
 				console.log('token is:');
 				console.log($scope.token);
 			}).catch(function(err){
