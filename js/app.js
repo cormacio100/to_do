@@ -3,7 +3,7 @@
 //	supporting modules
 	//	The RouteControllers module contains the controllers
 	//	defined for each specific route
-angular.module('TodoApp',['ngRoute','RouteControllers','UserFactory','angular-storage']);
+angular.module('TodoApp',['ngRoute','RouteControllers','UserFactory','angular-storage','TodoFactory']);
 
 angular.module('TodoApp').config(function($locationProvider,$routeProvider){
 	
@@ -22,5 +22,9 @@ angular.module('TodoApp').config(function($locationProvider,$routeProvider){
 	.when('/accounts/logout',{
 		templateUrl: 'templates/logout.html',
 		controller: 'LogoutController'
+	})
+	.when('/todo',{
+		templateUrl: 'templates/todo.html',
+		controller: 'TodoController'
 	});
 });
