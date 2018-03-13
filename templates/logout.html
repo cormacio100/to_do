@@ -1,0 +1,15 @@
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <form name="logoutForm" ng-submit="submitLogoutForm()" novalidate>
+                    <div class="form-group">
+                        <label>Do You wish to logout?</label>
+                        <select ng-model="action" ng-options="x for x in actions"></select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

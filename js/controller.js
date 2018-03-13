@@ -33,7 +33,6 @@ angular.module('RouteControllers', [])
 			});
 		};
 
-
 		//	Function retrieves the submitted USERNAME and PASSWORD
 		//	sends them to an API
 		//	and registers the user
@@ -54,7 +53,22 @@ angular.module('RouteControllers', [])
                 	alert("Oops! Something went wrong!");
                 	console.log(err);
                 });
-
             } //end if
+    	};
+    })
+    .controller('LogoutController',function($scope,store){
+    	// 	remove the object from the store and fowrad the user
+    	$scope.actions = ['No','Yes'];
+
+    	//	Remove JWT and username from local storage
+    	$scope.submitLogoutForm = function(){
+    		if(($scope.logoutForm.$valid))
+    		if('Yes'==$scope.action){
+    			store.remove('username');
+    			store.remove('authToken');
+    			alert('user has been logged out');
+    		}else{
+    			alert('User has not been logged out');
+    		}
     	};
     });
