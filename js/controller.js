@@ -131,8 +131,10 @@ angular.module('RouteControllers', [])
  		$scope.statuses = ['Todo','Doing','Done'];
         $scope.todos = [];
  
+ 		// retrieve all of the relevant Todo items
         TodoAPIFactory.getTodos(URL + "todo/", $scope.username, $scope.authToken).then(function(results) {
             $scope.todos = results.data || [];
+            console.log('Todo items loaded');
             console.log($scope.todos);
         }).catch(function(err) {
             console.log(err);

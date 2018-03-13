@@ -4,6 +4,8 @@
     <title>Angular Todo</title>
     <base href="/"> <!-- needed for Angular HTML5 mode -->
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -12,23 +14,32 @@
     <script type="text/javascript" src="bower_components/angular/angular.js"></script>
     <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
     <script type="text/javascript" src="bower_components/a0-angular-storage/dist/angular-storage.js"></script>
-    <style type="text/css">
-		body{
-			padding-top:70px;
-		}
-	</style>
 </head>
 <body>
+
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">Angular Todo</a>
+                <a class="navbar-brand" href="/">Cormac's List of Todos</a>
             </div>
-            <ul class="nav navbar-nav navbar-right">
+            <!--<ul class="nav navbar-nav navbar-right">
                 <li><a href="/">Home</a></li>
                 <li><a href="/todo">Todo</a></li>
                 <li><a href="/accounts/register">Account</a></li>
                 <li><a href="/accounts/logout">Logout</a></li>
+            </ul>
+            <nav-links><nav-links>-->
+            <ul class="nav mavbar-nav navbar-right">
+                <li><a href="/">Home</a></li>
+                <li><a href="/todo">Todo</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="far fa-user-circle"></i><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/accounts/register">Register</a></li>
+                        <li><a href="/accounts/login">Login</a></li>
+                        <li><a href="/accounts/logout">Logout</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </nav>

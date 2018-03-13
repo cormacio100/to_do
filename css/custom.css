@@ -1,0 +1,16 @@
+nav{
+    background-color:black;
+}
+.nav li a{
+    margin-left:1em;
+}
+a,
+a:hover{
+    color:#9d9d9d;
+}
+.fa-user-circle"{
+    color:black;
+}
+.contents{
+    margin-top:2em;
+}
