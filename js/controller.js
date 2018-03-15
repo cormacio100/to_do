@@ -133,20 +133,22 @@ angular.module('RouteControllers', [])
  
  		// retrieve all of the relevant Todo items
         TodoAPIFactory.getTodos(URL + "todo/", $scope.username, $scope.authToken).then(function(results) {
-            $scope.todos = results.data || [];
-            console.log('Todo items loaded');
+            $scope.todos = results.data;
             console.log($scope.todos);
         }).catch(function(err) {
             console.log(err);
         });
  
+        // may need to use different variables to stop 
+        // list item from being overwritten
+
         $scope.submitForm = function() {
             if ($scope.todoForm.$valid) {
                 $scope.todo.username = $scope.username;
-                $scope.todos.push($scope.todo);
- 
- 				TodoAPIFactory.createTodo(URL + "todo/", $scope.todo, $scope.authToken).then(function(results) {
-                    console.log(results)
+                $scope.todos.push(angular.copy($scope.todo));
+
+                TodoAPIFactory.createTodo(URL + "todo/", $scope.todo, $scope.authToken).then(function(results) {
+                    console.log(results);
                 }).catch(function(err) {
                     console.log(err)
                 });
