@@ -3,7 +3,7 @@
 //	supporting modules
 	//	The RouteControllers module contains the controllers
 	//	defined for each specific route
-angular.module('TodoApp',['ngRoute','RouteControllers','UserFactory','angular-storage','TodoFactory']);
+angular.module('TodoApp',['ngRoute','RouteControllers','UserFactory','angular-storage','TodoFactory','GlobalDirective']);
 
 angular.module('TodoApp').config(function($locationProvider,$routeProvider){
 	
@@ -26,5 +26,9 @@ angular.module('TodoApp').config(function($locationProvider,$routeProvider){
 	.when('/todo',{
 		templateUrl: 'templates/todo.html',
 		controller: 'TodoController'
+	})
+	.when('/todo/edit/:id',{
+		templateUrl: 'templates/edit-todo.html',
+		controller: 'EditTodoController'
 	});
 });

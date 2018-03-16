@@ -7,7 +7,7 @@ angular.module('RouteControllers', [])
 	.controller('RegisterController', function($scope, $location,UserAPIFactory,store) {
 		
 		$scope.registrationUser = {};
-		var URL = "https://morning-castle-91468.herokuapp.com/";
+		//var URL = "https://morning-castle-91468.herokuapp.com/";
 		var authStorage = {
 			name: "StorageTest"
 		}
@@ -74,56 +74,8 @@ angular.module('RouteControllers', [])
     		}
     	};
     })
-    .controller('TodoController_old',function($scope,$location,TodoAPIFactory,store){
-    	var URL = "https://morning-castle-91468.herokuapp.com/";
-
-    	//	retrieve JWT and username from local storage
-    	$scope.authToken = store.get('authToken');
-    	$scope.username = store.get('username');
-
-    	$scope.statuses = ['Todo','Doing','Done'];
-
-
-    	//	define empty todo object
-    	//$scope.todos = [];
-
-    	//	Retrieve the list of Todos
-    	TodoAPIFactory.getTodos(URL+"todo/"
-    		,$scope.username
-    		,$scope.authToken)
-    	.then(function(results){
-    		//	results will contain a list of todo items
-    		$scope.todos = results.data || [];
-    		console.log($scope.todos);
-    	}).catch(function(err){
-    		console.log(err);
-    	});
-
-
-
-    	$scope.submitForm = function(){
-    		//	check if the submitted form is valid
-    		if($scope.todoForm.$valid){
-    			//	assign logged in username to the Todo Item
-    			$scope.todo.username = $scope.username;
-    			//	add to the Todos object 
-    			$scope.todos.push($scope.todo);
-
-    			//	send Todo item to API to be saved
-    			//	3 params - url, data, token
-    			TodoAPIFactory.createTodo(URL+"todo/"
-    				,$scope.todo
-    				,$scope.authtoken)
-    			.then(function(results){
-    				console.log(results);
-    			}).catch(function(err){
-    				console.log(err);
-    			});
-    		}
-    	};
-    })
     .controller('TodoController', function($scope, $location, TodoAPIFactory, store) {
-        var URL = "https://morning-castle-91468.herokuapp.com/";
+        //var URL = "https://morning-castle-91468.herokuapp.com/";
  
         $scope.authToken = store.get('authToken');
         $scope.username = store.get('username');
@@ -131,27 +83,82 @@ angular.module('RouteControllers', [])
  		$scope.statuses = ['Todo','Doing','Done'];
         $scope.todos = [];
  
- 		// retrieve all of the relevant Todo items
+ 		// RETRIEVE ALL Todo items from API for the user
         TodoAPIFactory.getTodos(URL + "todo/", $scope.username, $scope.authToken).then(function(results) {
-            $scope.todos = results.data;
+            $scope.todos = results.data || [];
             console.log($scope.todos);
         }).catch(function(err) {
             console.log(err);
         });
  
-        // may need to use different variables to stop 
-        // list item from being overwritten
+        //	EDIT Todo item
+        //	ID is passed in 
+        $scope.editTodo = function(id){
+        	//	redirect user to URL with ID of the specific item appended
+        	$location.path('/todo/edit/'+id);
+        }
 
+        //	DELETE Todo item
+        $scope.deleteTodo = function(id){
+        	//	invoke the deleteTodo method on the Factory
+        	TodoAPIFactory.deleteTodo(URL+"todo/"+id,$scope.username,$scope.authToken).then(function(results){
+        		console.log('Item with ID:'+id+' deleted');
+        		console.log(results);
+        	});
+        }
+
+        //	WORKAROUND FOR POST API NOT WORKING
+        var id = 1;
+
+ 		//	when the Todo form is submitted
         $scope.submitForm = function() {
             if ($scope.todoForm.$valid) {
+            	//	Add the username to the username object
+            	//  so that the server knows which user's todo items
+            	//	to return 
+            	$scope.todo.id = id;
+            	id++;
                 $scope.todo.username = $scope.username;
                 $scope.todos.push(angular.copy($scope.todo));
 
+                //	send Todo item to API to save on server
                 TodoAPIFactory.createTodo(URL + "todo/", $scope.todo, $scope.authToken).then(function(results) {
-                    console.log(results);
+                   console.log('Todo Item created');
+                   console.log(results);
                 }).catch(function(err) {
                     console.log(err)
                 });
+
+                //	Reset Modal Form elements and close Window
+                $('#title').val('');
+                $('#description').val('');
+                $('#status').val('Todo');
+                $('#todo-modal').modal('toggle');
             }
         }
-    });;
+    })
+    .controller('EditTodoController',function($scope,$location,$routeParams,TodoAPIFactory,store){
+    	//	id is contained in the $routeParams object
+    	var id = $routeParams.id;
+
+    	//	Populate the EDIT form with TODO item
+    	TodoAPIFactory.getTodos(URL+'todo/'+id,$scope.username, store.get('authToken')).then(function(results){
+    		$scope.todo = results.data;
+    	}).catch(function(err){
+    		console.log(err);
+    	});
+
+    	//	when the user clicks to Save on the Edit Todo page
+    	$scope.submitForm = function(){
+    		if($scope.todoForm.$valid){
+    			$scope.todo.username = $scope.username;
+
+    			TodoAPIFactory.editTodo(URL+"todo/"+id,$scope.todo,store.get('authToken')).then(function(results){
+    				$location.path('/todo');
+    			}).catch(function(err){
+    				console.log(err);
+    			})
+    		}
+    	};
+
+    });

@@ -1,0 +1,5 @@
+sOn section "Creating and retrieving todo items
+
+Have built modal but it always overwrites existing
+
+check what the problem is with submitform()
