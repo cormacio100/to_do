@@ -1,8 +1,8 @@
 //	Define Controller Module 
 //	....which contains controllers
 angular.module('RouteControllers', [])
-	.controller('HomeController', function($scope) {
-		$scope.title = "Welcome To Angular Todo!"
+	.controller('HomeController', function($scope,$location) {
+        $location.path('/accounts/login');
 	})
 	.controller('RegisterController', function($scope, $location,UserAPIFactory,store) {
 		
@@ -16,6 +16,11 @@ angular.module('RouteControllers', [])
 		//	Receive a JWT in response
 		//	which can then be used to authenticate
 		$scope.login = function(){
+
+            console.log('scope.data is:');
+            console.log($scope.data);
+
+
 			UserAPIFactory.callAPI(URL+"accounts/api-token-auth/",$scope.data)
 			.then(function(results){
 				//	save the JWT (JSON Web Token) to scope as an object
@@ -28,7 +33,7 @@ angular.module('RouteControllers', [])
                 store.set('authToken', $scope.token);
 				console.log('token is:');
 				console.log($scope.token);
-				$location.path('/');
+				$location.path('/todo');
 			}).catch(function(err){
 				console.log(err.data);
 			});
@@ -57,21 +62,76 @@ angular.module('RouteControllers', [])
             } //end if
     	};
     })
+    .controller('LoginController',function($scope,$location,UserAPIFactory,store){
+
+        /*
+            -   template should contain a link to register if no account
+            -   check that form is valid
+                -   then send login to API for auth
+                -   save the returned token
+            -   once logged in forward to the todo page
+                -   todo page should include a check to see if logged in.
+                    -   if yes, allow access
+                    -   if no, forward to login paged
+        */
+
+        $scope.logInUser = {};
+
+        //  Retrieve JWT and save to local storage with uername
+        $scope.submitLoginForm = function(){
+            if($scope.loginForm.$valid){
+                $scope.logInUser.username = $scope.user.username;
+                $scope.logInUser.password = $scope.user.password;
+
+                console.log('scope.loggedInUser is ');
+                console.log($scope.loggedInUser);
+
+
+                /*  API for Logging in has not been built yet */
+
+                /*
+                UserAPIFactory.callAPI(URL+"accounts/register/",$scope.logInUser)
+                    .then(function(results){
+
+                        console.log('');
+
+
+                        //  save the JWT (JSON Web Token) to scope as an object
+                        $scope.token = results.data.token;
+                        //  set JWT in local storage as a Key: Value pair so 
+                        //  that it can be used by separte controllers
+                        //  Also, store the username
+                        //  Both stored as Strings
+                        store.set('username', $scope.logInUser.username);
+                        store.set('authToken', $scope.token);
+                        console.log('token is:');
+                        console.log($scope.token);
+                        $location.path('/todo');
+                    }).catch(function(err){
+                        console.log(err.data);
+
+                    });*/
+
+            }   //  end if
+        };
+    })
     .controller('LogoutController',function($scope,$location,store){
     	// 	remove the object from the store and fowrad the user
-    	$scope.actions = ['No','Yes'];
+    	//$scope.actions = ['No','Yes'];
 
     	//	Remove JWT and username from local storage
     	$scope.submitLogoutForm = function(){
-    		if(($scope.logoutForm.$valid))
-    		if('Yes'==$scope.action){
-    			store.remove('username');
-    			store.remove('authToken');
-    			alert('user has been logged out');
-    			$location.path('/');
-    		}else{
-    			alert('User has not been logged out');
-    		}
+    		if(($scope.logoutForm.$valid)){
+                if('Yes'==$scope.action){
+                    store.remove('username');
+                    store.remove('authToken');
+                    alert('user has been logged out');
+                    $location.path('/');
+                }else{
+                    alert('User has not been logged out');
+                }
+            }
+    		
     	};
     })
     .controller('TodoController', function($scope, $location, TodoAPIFactory, store) {

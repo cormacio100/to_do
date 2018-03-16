@@ -1,3 +1,11 @@
 --	need to create a login page
+	-	should contain a link to register if no account
+	-	check that form is valid
+		-	then send login to API for auth
+		-	save the returned token
+	-	once logged in forward to the todo page
+		-	todo page should include a check to see if logged in.
+			-	if yes, allow access
+			-	if no, forward to login paged
 
 --	API Seems to be working for list and edit not delete

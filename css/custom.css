@@ -5,7 +5,9 @@ nav{
     margin-left:1em;
 }
 a,
-a:hover{
+a:hover,
+h1,
+h2{
     color:#9d9d9d;
 }
 .fa-user-circle"{
@@ -13,4 +15,8 @@ a:hover{
 }
 .contents{
     margin-top:2em;
+}
+.form-group,
+.contents{
+	margin-top:2em;
 }

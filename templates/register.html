@@ -1,5 +1,19 @@
-<div class="container">
+<div class="container contents">
     <div class="row">
+        <div class="col-sm-3">
+            &nbsp;
+        </div>
+        <div class="col-sm-6">
+            <h1>Registration Page</h1>
+        </div>
+        <div class="col-sm-3">
+            &nbsp;
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            &nbsp;
+        </div>
         <div class="col-sm-6">
             <form name="registrationForm" ng-submit="submitForm()" novalidate>
                 <div class="form-group">
@@ -12,8 +26,11 @@
                     <input type="password" name="password" class="form-control" ng-model="user.password" required>
                     <p ng-show="registrationForm.password.$pristine" class="help-block">Your password is required</p>
                 </div>
-                <button type="submit" class="btn btn-primary" ng-disabled="registrationForm.$invalid">Submit</button>
+                <button type="submit" class="btn btn-primary btn-block" ng-disabled="registrationForm.$invalid">Submit</button>
             </form>
+        </div>
+        <div class="col-sm-3">
+            &nbsp;
         </div>
     </div>
 </div>

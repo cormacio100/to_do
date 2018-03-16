@@ -1,6 +1,32 @@
-<div class="container">
-	<todo-table></todo-table>
-	<button type="button" class="btn btn-primary btn-large" data-toggle="modal" data-target="#todo-modal">Create New Todo Item</button>
+<div class="container contents">
+    <div class="row">
+        <div class="col-sm-3">
+            <h2>Todo's</h2>
+        </div>
+        <div class="col-sm-6">
+            &nbsp;
+        </div>
+        <div class="col-sm-3">
+            &nbsp;
+        </div>
+    </div>
+    <div class="row contents">
+        <div class="col-sm-12">
+	       <todo-table></todo-table>
+       </div>
+   </div>
+       <div class="row">
+        <div class="col-sm-3">
+            &nbsp;
+        </div>
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-primary btn-large btn-block" data-toggle="modal" data-target="#todo-modal">Create New Todo Item</button>
+        </div>
+        <div class="col-sm-3">
+            &nbsp;
+        </div>
+    </div>
+	
 	<div class="modal fade" id="todo-modal" tabindex="-1" role="dialog" aria-labelledby="todo-form-modal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
