@@ -22,14 +22,14 @@
                         </div>
                         <div class="form-group">
                             <label>Status</label>
-                            <select id="status" class="form-control" ng-model="todo.status" ng-init="statuses" required>
+                            <!--<select id="status" class="form-control" ng-model="todo.status" ng-init="statuses" required>
                             	<option ng-repeat="status in statuses" value="{{status}}">{{status}}</option>
-                            </select>
-                            <!--<select class="form-control" name="status" ng-model="todo.status" ng-init="todo.status = options[1]" >
+                            </select>-->
+                            <select class="form-control" name="status" ng-model="todo.status" ng-init="todo.status = options[1]" >
                                 <option value="Todo">Todo</option>
                                 <option value="Doing">Doing</option>
                                 <option value="Done">Done</option>
-                            </select>-->
+                            </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

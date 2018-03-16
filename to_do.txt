@@ -1,5 +1,3 @@
-sOn section "Creating and retrieving todo items
+--	need to create a login page
 
-Have built modal but it always overwrites existing
-
-check what the problem is with submitform()
+--	API Seems to be working for list and edit not delete

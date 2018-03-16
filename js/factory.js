@@ -17,7 +17,23 @@ angular.module('UserFactory',[])
 
 //	Define Facotry module
 angular.module('TodoFactory',[])
-	//	create a factory inside the module
+	//	create a factory inside the module for communicating with API
+	.factory('TodoAPIFactory_new',function($http){
+		TodoAPIFactory = {
+			getTodos: function(url, data, token) {
+				header = "Authorization: JWT " + token;
+				return $http.get(url, {params:{"username": data}}, header);
+			},
+			createTodo: function(url, data, token) {
+				header = "Authorization: JWT " + token;
+				return $http.post(url, data, header);
+			},
+			editTodo: function(url, data, token) {
+				header = "Authorization: JWT " + token;
+				return $http.put(url, data, header);
+			}
+		};
+	})
 	.factory('TodoAPIFactory',function($http){
 
 		//	Function RETRIEVES Todo Items and takes 3 params
@@ -25,6 +41,8 @@ angular.module('TodoFactory',[])
 	 	//	data - username 
 	 	//  token - JWT 
 		var getTodosLogic = function(url,data,token){
+
+			console.log('in getTodosLogic');
 			/**
 			 *  Create the HEADER for the request as a STRING
 			 *	It will contain the token
@@ -70,6 +88,8 @@ angular.module('TodoFactory',[])
 		}
 
 		var deleteTodoLogic = function(url,token){
+			console.log('delete URL');
+			console.log(url);
 			var header = "Authorization: JWT " + token;
 			//	ID is passed in the URL
             return $http.delete(url, token);

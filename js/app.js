@@ -1,6 +1,6 @@
 //	Define main App module
 //	Use Dependency Injection to include an array of 
-//	supporting modules
+//	supporting MODULES
 	//	The RouteControllers module contains the controllers
 	//	defined for each specific route
 angular.module('TodoApp',['ngRoute','RouteControllers','UserFactory','angular-storage','TodoFactory','GlobalDirective']);

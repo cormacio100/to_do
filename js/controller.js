@@ -76,7 +76,7 @@ angular.module('RouteControllers', [])
     })
     .controller('TodoController', function($scope, $location, TodoAPIFactory, store) {
         //var URL = "https://morning-castle-91468.herokuapp.com/";
- 
+        console.log('Retrieving Todo List1')
         $scope.authToken = store.get('authToken');
         $scope.username = store.get('username');
  
@@ -85,6 +85,7 @@ angular.module('RouteControllers', [])
  
  		// RETRIEVE ALL Todo items from API for the user
         TodoAPIFactory.getTodos(URL + "todo/", $scope.username, $scope.authToken).then(function(results) {
+            console.log('Retrieving Todo List2')
             $scope.todos = results.data || [];
             console.log($scope.todos);
         }).catch(function(err) {
@@ -142,6 +143,7 @@ angular.module('RouteControllers', [])
     	var id = $routeParams.id;
 
     	//	Populate the EDIT form with TODO item
+    	//	ID passed as part of the URL to access specific todo item
     	TodoAPIFactory.getTodos(URL+'todo/'+id,$scope.username, store.get('authToken')).then(function(results){
     		$scope.todo = results.data;
     	}).catch(function(err){
